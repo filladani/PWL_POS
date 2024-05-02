@@ -56,7 +56,7 @@
         var dataPenjualan = $('#table_penjualan').DataTable({
             serverSide: true,
             ajax: {
-                "url": "{{ url('penjualan/list') }}",
+                "url": "{{ url('penjualans/list') }}",
                 "dataType": "json",
                 "type": "POST",
                 "data": function(d){

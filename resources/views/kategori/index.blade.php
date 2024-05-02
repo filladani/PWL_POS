@@ -1,4 +1,4 @@
-@extends('layouts.template')
+{{-- @extends('layouts.template')
 
 @section('content')
 <div class="card card-outline card-primary">
@@ -35,14 +35,14 @@
 @push('js')
 <script>
     $(document).ready(function() {
-        var dataLevel = $('#table_kategori').DataTable({
+        var dataKategori = $('#table kategori').DataTable({
             serverSide: true,
             ajax: {
                 "url": "{{ url('kategori/list') }}",
                 "dataType": "json",
                 "type": "POST",
                 "data": function(d){
-                    d.level_id = $('#level_id').val();
+                    d.level_id = $('#kategori_kode').val();
                 }
             },
             columns: [
@@ -73,12 +73,12 @@
             ]
         });
 
-        $('#level_id').on('change', function(){
-            dataLevel.ajax.reload(); // Mengubah dari dataUser menjadi dataLevel
+        $('#kategori_kode').on('change', function(){
+            dataKategori.ajax.reload(); // Mengubah dari dataUser menjadi dataLevel
         });
     });
 </script>
-@endpush
+@endpush --}}
 
 
 
@@ -135,7 +135,7 @@
 
 
 
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('subtitle', 'Kategori')
 @section('content_header_title', 'Home')
@@ -158,4 +158,4 @@
 
 @push('scripts')
     {{ $dataTable->scripts() }}
-@endpush --}}
+@endpush

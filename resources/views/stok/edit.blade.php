@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Tanggal Stok</label>
                         <div class="col-11">
-                            <input type="datetime-local" class="form-control" id="harga_jual" name="stok_tanggal" value="{{ old('stok_tanggal', $stok->stok_tanggal) }}" required>
+                            <input type="datetime-local" class="form-control" id="harga_jual" name="stok_tanggal" value="{{ old('stok_tanggal', \Carbon\Carbon::parse($stok->stok_tanggal)->format('Y-m-d\TH:i')) }}" required>
                             @error('stok_tanggal')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror

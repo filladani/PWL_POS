@@ -28,27 +28,29 @@ class LevelController extends Controller
     //     return view('level', ['data' => $data]);
     // }
 
-    public function index()
+    public function index(LevelDataTable $dataTable)
     {
-        $breadcrumb = (object) [
-            'title' => 'Daftar Level',
-            'list' => ['Home', 'Level']
-        ];
+        // $breadcrumb = (object) [
+        //     'title' => 'Daftar Level',
+        //     'list' => ['Home', 'Level']
+        // ];
 
-        $page = (object) [
-            'title' => 'Daftar level yang terdaftar dalam sistem'
-        ];
+        // $page = (object) [
+        //     'title' => 'Daftar level yang terdaftar dalam sistem'
+        // ];
 
-        $activeMenu = 'level'; // set menu yang sedang aktif
+        // $activeMenu = 'level'; // set menu yang sedang aktif
 
-        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        // return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+
+        return $dataTable -> render('level.index');
     }
 
     public function list(Request $request)
     {
-        $levels = LevelModel::select('level_id', 'level_kode', 'level_nama');
+        $level = LevelModel::select('level_id', 'level_kode', 'level_nama');
 
-        return DataTables::of($levels)
+        return DataTables::of($level)
             ->addIndexColumn()
             ->addColumn('aksi', function ($level) {
                 $btn = '<a href="' . url('/level/' . $level->level_id) . '" class="btn btn-info btn-sm">Detail</a> ';

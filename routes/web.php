@@ -9,6 +9,10 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\AuthController;
+
 
 
 /*
@@ -47,6 +51,17 @@ Route::resource('m_user', POSController::class);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Route::group(['prefix' => 'level'], function () {
+    Route::get('/', [LevelController::class, 'index']);
+    Route::post('/list', [LevelController::class, 'list']);
+    Route::get('/create', [LevelController::class, 'create']);
+    Route::post('/', [LevelController::class, 'store']);
+    Route::get('/{id}', [LevelController::class, 'show']);
+    Route::get('/{id}/edit', [LevelController::class, 'edit'])->name('level.edit');
+    Route::put('/{id}', [LevelController::class, 'update'])->name('level.update');
+    Route::delete('/{id}', [LevelController::class, 'destroy'])->name('level.delete');
+});
 
 
 route::get('/', [WelcomeController::class, 'index']);
@@ -107,4 +122,27 @@ Route::group(['prefix' => 'penjualan'], function () {
     Route::get('/{id}/edit', [PenjualanController::class, 'edit']);
     Route::post('/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
     Route::delete('/{id}', [PenjualanController::class, 'destroy']);
+});
+
+
+
+// JS 9
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('proses_register', [AuthController::class, 'proses_register'])->name('proses_register');
+
+//kita atur juga untuk middleware munggunakan group pada routing
+//didalamnya terdapat group untuk mengecek kondisi login
+//jika user yang login merupakan admin maka akan diaragkan ke AdminController
+//jika user yang login merupakan manager maka akan di arahkan ke UserController
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['cek_login:1']], function () {
+        Route::resource('admin', AdminController::class);
+    });
+    Route::group(['middleware' => ['cek_login:2']], function () {
+        Route::resource('manager', ManagerController::class);
+    });
 });

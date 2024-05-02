@@ -1,4 +1,4 @@
-@extends('layouts.template')
+{{-- @extends('layouts.template')
 
 @section('content')
 <div class="card card-outline card-primary">
@@ -41,9 +41,9 @@
                 "url": "{{ url('level/list') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data": function(d){
-                    d.level_id = $('#level_id').val();
-                }
+                // "data": function(d){
+                //     d.level_id = $('#level_id').val();
+                // }
             },
             columns: [
                 {
@@ -51,6 +51,12 @@
                     className: "text-center",
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data: "level_id",
+                    className: "",
+                    orderable: true,
+                    searchable: true
                 },
                 {
                     data: "level_kode",
@@ -78,4 +84,30 @@
         });
     });
 </script>
+@endpush --}}
+
+
+@extends('layouts.app')
+
+@section('subtitle', 'Level')
+@section('content_header_title', 'Home')
+@section('content_header_subtitle', 'Level')
+
+@section('content')
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Manage Level</div>
+            <div class="d-flex justify-content-end">
+                <a href="/kategori/create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle-fill mr-1"></i>
+                    <span>Tambah Level</span>
+                </a>
+            </div>
+            {{$dataTable->table()}}
+        </div>
+    </div>
+@endsection
+
+@push('scripts')
+    {{ $dataTable->scripts() }}
 @endpush

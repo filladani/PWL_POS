@@ -13,27 +13,29 @@ use Yajra\DataTables\Facades\DataTables;
 
 class KategoriController extends Controller
 {
-    public function index()
+    public function index(KategoriDataTable $dataTable)
     {
-        $breadcrumb = (object) [
-            'title' => 'Daftar Kategori',
-            'list' => ['Home', 'Kategori']
-        ];
+    //     $breadcrumb = (object) [
+    //         'title' => 'Daftar Kategori',
+    //         'list' => ['Home', 'Kategori']
+    //     ];
 
-        $page = (object) [
-            'title' => 'Daftar kategori yang terdaftar dalam sistem'
-        ];
+    //     $page = (object) [
+    //         'title' => 'Daftar kategori yang terdaftar dalam sistem'
+    //     ];
 
-        $activeMenu = 'kategori';
+    //     $activeMenu = 'kategori';
 
-        return view('kategori.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+    //     return view('kategori.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+
+    return $dataTable -> render('kategori.index');
     }
 
     public function list(Request $request)
     {
-        $kategoris = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
+        $kategori = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
 
-        return DataTables::of($kategoris)
+        return DataTables::of($kategori)
             ->addIndexColumn()
             ->addColumn('aksi', function ($kategori) {
                 $btn = '<a href="' . url('/kategori/' . $kategori->kategori_id) . '" class="btn btn-info btn-sm">Detail</a> ';
