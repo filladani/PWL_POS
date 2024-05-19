@@ -275,13 +275,19 @@ class UserController extends Controller
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $image = $request->file('image');
+        $namaimage = time() . '_' . $request->username . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('gambar/user'), $namaimage);
 
         UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => bcrypt($request->password),
             'level_id' => $request->level_id,
+            'image' => $namaimage,
         ]);
 
         return redirect('/user')->with('success', 'Data user berhasil disimpan');

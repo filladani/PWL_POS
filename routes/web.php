@@ -12,6 +12,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileUploadController;
 
 
 
@@ -146,3 +147,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('manager', ManagerController::class);
     });
 });
+
+
+Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
+
+
+Route::get('/tugas-file-upload', [FileUploadController::class, 'tugasFileUpload']);
+Route::post('/tugas-file-upload', [FileUploadController::class, 'TugasProsesFileUpload']);
